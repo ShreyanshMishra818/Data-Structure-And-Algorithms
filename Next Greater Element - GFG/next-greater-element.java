@@ -9,46 +9,49 @@ class GFG {
     
 	public static void main (String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter ot = new PrintWriter(System.out);
 		int t = Integer.parseInt(br.readLine().trim());
 		while(t-->0){
 		    int n = Integer.parseInt(br.readLine().trim());
 		    String inputLine[] = br.readLine().trim().split(" ");
 		    long[] arr = new long[n];
 		    for(int i=0; i<n; i++)arr[i]=Long.parseLong(inputLine[i]);
-		    long[] res = new Solution().nextLargerElement(arr, n);
+		    Solution ob = new Solution();
+		    long[] res = ob.nextLargerElement(arr, n);
 		    for (int i = 0; i < n; i++) 
-		        System.out.print(res[i] + " ");
-		    System.out.println();
+		        ot.print(res[i] + " ");
+		    ot.println();
 		}
+        ot.close();
 	}
 }
-
 
 
 
 // } Driver Code Ends
 
 
-class Solution
-{
-    //Function to find the next greater element for each element of the array.
-    public static long[] nextLargerElement(long[] arr, int n)
-    { 
+// User Function Template for JAVA
+
+class Solution{
+    public static long[] nextLargerElement(long[] arr, int n) { 
         // Your code here
-        long ans[]=new long[arr.length];
-        ans[arr.length-1]=-1;
-        Stack<Long> stk=new Stack<>();
-        stk.push(arr[arr.length-1]);
-        for(int i=arr.length-2;i>=0;i--){
-           while(stk.size()>0 && stk.peek()<=arr[i]){
-               stk.pop();
-           }
-           if(stk.size()==0){
-               ans[i]=-1;
-           }else{
-               ans[i]=stk.peek();
-           }
-           stk.push(arr[i]);
+        Stack<Integer> stk=new Stack<>();
+        stk.push(0);
+        long ans[]=new long[n];
+        for(int i=1;i<n;i++){
+            if(arr[i]>arr[stk.peek()]){
+                while(stk.size()>0 && arr[i]>arr[stk.peek()]){
+                    ans[stk.peek()]=arr[i];
+                    stk.pop();
+                }
+            }
+            stk.push(i);
+        }
+        for(int i=0;i<ans.length;i++){
+            if(ans[i]==0){
+                ans[i]=-1;
+            }
         }
         return ans;
     } 
