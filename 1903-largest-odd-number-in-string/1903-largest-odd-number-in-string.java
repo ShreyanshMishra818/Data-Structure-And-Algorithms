@@ -3,7 +3,7 @@ class Solution {
         int n = s.length();
 
         for(int i=n-1; i>=0; i--){
-            int a = s.charAt(i)-48;
+            int a = s.charAt(i);
             if(a%2!=0){
                 return s.substring(0,i+1);
             }
